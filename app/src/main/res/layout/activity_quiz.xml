@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<android.support.constraint.ConstraintLayout -->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:context=".QuizActivity">-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hello World!"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--</android.support.constraint.ConstraintLayout>-->
+
+<LinearLayout xmlns:andriod="http://schemas.android.com/apk/res/android"
+    andriod:layout_width="match_parent"
+    andriod:layout_height="match_parent"
+    andriod:gravity="center"
+    andriod:orientation="vertical">
+    <TextView
+        andriod:layout_width="wrap_content"
+        andriod:layout_height="wrap_content"
+        andriod:padding="24dp"
+        andriod:id="@+id/question_text_view"/>
+    <LinearLayout
+        andriod:layout_width="wrap_content"
+        andriod:layout_height="wrap_content"
+        andriod:orientation="horizontal">
+
+        <Button
+            andriod:layout_width="wrap_content"
+            andriod:layout_height="wrap_content"
+            andriod:text="@string/true_button"
+            andriod:id="@+id/true_button"/>
+        <Button
+            andriod:layout_width="wrap_content"
+            andriod:layout_height="wrap_content"
+            andriod:text="@string/false_button"
+            andriod:id="@+id/false_button"/>
+
+    </LinearLayout>
+    <LinearLayout
+        andriod:layout_width="wrap_content"
+        andriod:layout_height="wrap_content"
+        andriod:orientation="horizontal">
+        <Button
+            andriod:layout_width="wrap_content"
+            andriod:layout_height="wrap_content"
+            andriod:id="@+id/previous_button"
+            andriod:drawableLeft="@drawable/arrow_left"
+            andriod:text="@string/previous_button"/>
+        <Button
+            andriod:layout_width="wrap_content"
+            andriod:layout_height="wrap_content"
+            andriod:text="@string/next_button"
+            andriod:id="@+id/next_button"
+            andriod:drawableRight="@drawable/arrow_right"
+            andriod:drawablePadding="4dp"/>
+    </LinearLayout>
+
+</LinearLayout>
