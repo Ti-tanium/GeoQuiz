@@ -18,6 +18,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button mPreviousButton;
     private TextView mQuestionTextView;
     private static final  String TAG="QuizActivity";
+    private static final String KEY_INDEX="index";
 
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_australia,true),
@@ -29,8 +30,11 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Log.d(TAG,"onCreate(Bundle) called");
+
+        if(savedInstanceState!=null){
+            mCurrentIndex=savedInstanceState.getInt(KEY_INDEX);
+        }
 
         setContentView(R.layout.activity_quiz);
 
@@ -83,6 +87,13 @@ public class QuizActivity extends AppCompatActivity {
             messageResId=R.string.incorrect_text;
         }
         Toast.makeText(QuizActivity.this,messageResId,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        Log.i(TAG,"onSaveInstanceState");
+        outState.putInt(KEY_INDEX,mCurrentIndex);
     }
 
     @Override
