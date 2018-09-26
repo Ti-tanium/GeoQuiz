@@ -45,7 +45,15 @@
             andriod:id="@+id/false_button"/>
 
     </LinearLayout>
-        <Button
+    <Button
+        andriod:layout_width="wrap_content"
+        andriod:layout_height="wrap_content"
+        andriod:text="@string/cheat_button"
+        andriod:layout_gravity="bottom|center"
+        andriod:layout_margin="24dp"
+        andriod:id="@+id/cheat_button"
+        />
+    <Button
             andriod:layout_width="wrap_content"
             andriod:layout_height="wrap_content"
             andriod:id="@+id/previous_button"
@@ -61,5 +69,6 @@
             andriod:drawableRight="@drawable/arrow_right"
             andriod:drawablePadding="4dp"
             andriod:layout_gravity="bottom|right"
-            andriod:layout_margin="24dp"/>
+            andriod:layout_margin="24dp"
+            />
 </FrameLayout>
