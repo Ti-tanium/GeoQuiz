@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,6 +70,19 @@ public class CheatActivity extends AppCompatActivity {
             int cx= mShowAnswerButton.getWidth()/2;
             int cy=mShowAnswerButton.getHeight()/2;
             float radius=mShowAnswerButton.getWidth();
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                Animator anima= ViewAnimationUtils.createCircularReveal(mShowAnswerButton,cx,cy,radius,0);
+                anima.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        mShowAnswerButton.setVisibility(View.INVISIBLE);
+                    }
+                });
+                anima.start();
+            }else{
+                mShowAnswerButton.setVisibility(View.INVISIBLE);
+            }
         });
     }
 
