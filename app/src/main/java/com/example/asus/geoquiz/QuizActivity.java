@@ -15,8 +15,8 @@ import org.w3c.dom.Text;
 public class QuizActivity extends AppCompatActivity {
     private Button mTrueButton;
     private Button mFalseButton;
-    private Button mNextButton;
-    private Button mPreviousButton;
+    private ImageButton mNextButton;
+    private ImageButton mPreviousButton;
     private Button mCheatButton;
     private boolean mIsCheater;
     private TextView mQuestionTextView;
@@ -63,7 +63,7 @@ public class QuizActivity extends AppCompatActivity {
         mFalseButton = (Button) findViewById(R.id.false_button);
         mFalseButton.setOnClickListener(v -> checkAnswer(false));
 
-        mNextButton = (Button) findViewById(R.id.next_button);
+        mNextButton = (ImageButton) findViewById(R.id.next_button);
         mNextButton.setOnClickListener(v -> {
             mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
             int question1 = mQuestionBank[mCurrentIndex].getTextResId();
@@ -71,7 +71,7 @@ public class QuizActivity extends AppCompatActivity {
             mIsCheater=false;
         });
 
-        mPreviousButton = (Button) findViewById(R.id.previous_button);
+        mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
         mPreviousButton.setOnClickListener(v -> {
             mCurrentIndex = (mCurrentIndex - 1 + mQuestionBank.length) % mQuestionBank.length;
             int question12 = mQuestionBank[mCurrentIndex].getTextResId();
