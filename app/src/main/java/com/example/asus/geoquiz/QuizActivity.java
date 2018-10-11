@@ -7,10 +7,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
+
+import javax.net.ssl.KeyManagerFactorySpi;
 
 public class QuizActivity extends AppCompatActivity {
     private Button mTrueButton;
@@ -24,7 +27,10 @@ public class QuizActivity extends AppCompatActivity {
     private static final String KEY_INDEX = "index";
     private static final int REQUEST_CODE_CHEAT=0;
     private static final String KEY_IS_CHEATER="isCheater";
-
+    private static final String KEY_IS_QUESTION_ANSWERED="IsQuestionAnswered";
+    private static final String KEY_NUMBER_OF_RIGHT_ANSWER="NumberOfRightAnwswer";
+    private boolean[] mIsQuestionAnswered;
+    private int mNumberOfRightAnwswer;
 
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_australia, true),
@@ -41,10 +47,17 @@ public class QuizActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX);
             mIsCheater=savedInstanceState.getBoolean(KEY_IS_CHEATER);
+            mNumberOfRightAnwswer=savedInstanceState.getInt(KEY_NUMBER_OF_RIGHT_ANSWER);
+            mIsQuestionAnswered=savedInstanceState.getBooleanArray(KEY_IS_QUESTION_ANSWERED);
+        }else{
+            mIsQuestionAnswered=new boolean[mQuestionBank.length];
+            for(int i=0;i<mQuestionBank.length;i++){
+                mIsQuestionAnswered[i]=false;
+            }
+            mNumberOfRightAnwswer=0;
         }
 
         setContentView(R.layout.activity_quiz);
-
 
         mCheatButton = (Button) findViewById(R.id.cheat_button);
         mCheatButton.setOnClickListener((View view) -> {
@@ -63,12 +76,23 @@ public class QuizActivity extends AppCompatActivity {
         mFalseButton = (Button) findViewById(R.id.false_button);
         mFalseButton.setOnClickListener(v -> checkAnswer(false));
 
+        if(mIsQuestionAnswered[mCurrentIndex]){
+            setButtonStatus(false);
+        }else{
+            setButtonStatus(true);
+        }
+
         mNextButton = (ImageButton) findViewById(R.id.next_button);
         mNextButton.setOnClickListener(v -> {
             mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
             int question1 = mQuestionBank[mCurrentIndex].getTextResId();
             mQuestionTextView.setText(question1);
             mIsCheater=false;
+            if(mIsQuestionAnswered[mCurrentIndex]){
+                setButtonStatus(false);
+            }else{
+                setButtonStatus(true);
+            }
         });
 
         mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
@@ -76,6 +100,11 @@ public class QuizActivity extends AppCompatActivity {
             mCurrentIndex = (mCurrentIndex - 1 + mQuestionBank.length) % mQuestionBank.length;
             int question12 = mQuestionBank[mCurrentIndex].getTextResId();
             mQuestionTextView.setText(question12);
+            if(mIsQuestionAnswered[mCurrentIndex]){
+                setButtonStatus(false);
+            }else{
+                setButtonStatus(true);
+            }
         });
     }
 
@@ -87,11 +116,24 @@ public class QuizActivity extends AppCompatActivity {
         }else{
             if (userPressedTrue == isAnswerTrue) {
                 messageResId = R.string.correct_text;
+                mNumberOfRightAnwswer++;
             } else {
                 messageResId = R.string.incorrect_text;
             }
         }
         Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT).show();
+        mIsQuestionAnswered[mCurrentIndex]=true;
+        setButtonStatus(false);
+        if(mCurrentIndex==mQuestionBank.length-1){
+            double score=mNumberOfRightAnwswer*100/mQuestionBank.length;
+            Toast.makeText(QuizActivity.this,"Total Score:"+score+"%",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setButtonStatus(boolean enabled){
+        mTrueButton.setEnabled(enabled);
+        mFalseButton.setEnabled(enabled);
+        mCheatButton.setEnabled(enabled);
     }
 
     @Override
@@ -111,6 +153,8 @@ public class QuizActivity extends AppCompatActivity {
         Log.i(TAG, "onSaveInstanceState");
         outState.putInt(KEY_INDEX, mCurrentIndex);
         outState.putBoolean(KEY_IS_CHEATER,mIsCheater);
+        outState.putBooleanArray(KEY_IS_QUESTION_ANSWERED,mIsQuestionAnswered);
+        outState.putInt(KEY_NUMBER_OF_RIGHT_ANSWER,mNumberOfRightAnwswer);
     }
 
     @Override

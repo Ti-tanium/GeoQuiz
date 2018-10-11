@@ -3,8 +3,8 @@
     <string name="question_text">Canberra is the capital of Australia?</string>
     <string name="true_button">true</string>
     <string name="false_button">false</string>
-    <string name="correct_text">:) Congratulations!</string>
-    <string name="incorrect_text">:( Try again?</string>
+    <string name="correct_text">Congratulations!</string>
+    <string name="incorrect_text">:( Wrong answer!</string>
     <string name="next_button">next</string>
     <string name="previous_button">previous</string>
     <string name="warning_text">Are you sure you want to do this?</string>
